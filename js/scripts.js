@@ -14,7 +14,7 @@ function criterionsToArray(name, experience, platform, application, size, optimi
   allCriterionArrays.push(criterionArray); //Will be used to see all surveys ever submitted.
   return criterionArray;
 };
-
+//Coefficients used to weight every answer in order to determine users recommended class.
 function determineSum(inputCriterionArray){
   var rubySum=0;
   var phpSum=0;
@@ -89,6 +89,7 @@ function determineSum(inputCriterionArray){
   allPrefArray.push(outputMatrix); //Will use for statistics later on.
   return outputMatrix;
 }
+//Creates an output array 0-3. 0 - Ruby, 1-PHP, 2-Java, 3-C#
 function determineClass(inputArrayOfSums){
   inputArray = copyArray(inputArrayOfSums);
   inputArrayOfSums.sort(function(a,b){return a-b}); //Don't know how to make a mappings yet.
@@ -119,30 +120,70 @@ function determineClass(inputArrayOfSums){
     }
   } else {
   }
+  allPrefArray.push(outputArray); //Storing this output Array for statistics of all surveys submitted.
   return outputArray;
 }
-function outputPref(inputArray){
+//Takes outputArray from determineClass to output as a String.
+function outputPref(inputArray,request){
   var arrLength=inputArray.length;
-  console.log(inputArray);
-  var returnString = ""
+  var title = "";
+  var body ="";
   for(var i=0; i<arrLength; i++){
     if(inputArray[i]==0){
-      returnString += "Ruby ";
-    } else if(inputArray[i]==1) {
-      returnString += "PHP ";
+      title+=drawRuby(1) + " ";
+      body+=drawRuby(2);
+    } else if(inputArray[i]==1){
+      title+=drawPHP(1) + " ";
+      body+=drawPHP(2);
     } else if(inputArray[i]==2){
-      returnString += "Java ";
-    } else {
-      returnString += "C# ";
+      title+=drawJava(1) + " ";
+      body+=drawJava(2);
+    } else{
+      title+=drawC(1) + " ";
+      body+=drawC(2);
     }
   }
-    return returnString;
+  if(request==1){
+    return title;
+  } else if(request==2){
+    return body;
+  }else{
+  }
 };
-// Determines when the next class starts for a particular class.
-function nextClassDateComparator(inputDate, classType){
 
-};
-//Function used to determine if second highest preference is same value as highest.
+//draw functions exist to pull either header or body content.
+function drawRuby(content){
+  if(content==1){
+    return "Ruby";
+  }else if(content==2) {
+    return "Ruby is a favorite language of developers building interactive web applications. If an app involves users creating accounts, entering information, and interacting with dynamic content, there's a good chance it is built with Ruby. Ruby became popular because the Rails framework, which is written with Ruby, simplified many of the common tasks associated with building web applications. It's most popular with startups and smaller companies who are looking to build their product quickly.Though each language has its niche, there is plenty of crossover. For example, Rails' popularity inspired copycats in just about every language, and so you'll see interactive web applications written in C#, Java, and PHP, with Rails-like frameworks including .NET MVC, Spring, and Laravel. Even at one company, you might find them using PHP for their marketing site, Ruby for their web application, and Java for their back-end processing.";
+
+  }
+
+}
+function drawPHP(content){
+  if(content==1){
+    return "PHP"
+  } else if(content==2) {
+    return "PHP is by far the most popular backend language today, with 80 percent of websites utilizing it 'server-side'. It is perhaps best known for it's use in content management systems like Wordpress, Drupal, and Joomla. But the versatility of the language and the frameworks it powers make employment options numerous and diverse. If you're keen to work for a fast paced agency that builds websites for lots of clients, or maintain the security and stability of a huge complex of government websites, or if you like the idea of building out small sites for brands, businesses, and organizations - In any of these cases, PHP would be a great way to go.";
+  }
+
+}
+function drawJava(content){
+  if(content==1){
+    return "Java"
+  } else if(content==2) {
+    return "Java is also a favorite of enterprise companies, but its appeal is broader as well: it's one of the most popular of all programming languages, and it's used in everything from for high-performance processing to building Android user interfaces. Because Java has been very popular for a very long time and is used in so many applications, it is also a very high-demand language. If you're interested in working for an enterprise-level company, as an Android developer, or in high-performance applications, Java could be a good language to learn.";
+  }
+
+}
+function drawC(content){
+  if(content==1){
+    return "C#";
+  } else if(content==2) {
+    return "C# is most popular among bigger established businesses, often for building internal software. Because it's been around for a long time and has the backing of Microsoft, it is one of the most in-demand languages in the job market. C# has also been going through a bit of a rebirth lately, with Microsoft open sourcing the language and surrounding platform, porting it to run on Mac and Linux, and incorporating many of the best features of other languages. If you like the idea of working for a larger company on business software, C# is a great choice.";
+  }
+}
 //Uses to for loops to not include the highest value while keeping indexing the same.
 function determineSecondHighestPref(inputArray,highestPref,secondHighestPref,locationOfHighest){
   var arrLength=inputArray.length;
@@ -168,7 +209,10 @@ function copyArray(inputArray){
   }
   return result;
 }
+// Determines when the next class starts for a particular class.
+function nextClassDateComparator(inputDate, classType){
 
+};
 
 $(document).ready(function(){
 
@@ -181,7 +225,7 @@ $(document).ready(function(){
     var sizePref = $("input:radio[name=size]:checked").val();
     var optimizationPref = $("input:radio[name=opt]:checked").val();
     var dateToStart = $("#date").val();
-    result=outputPref(determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart))));
+    result=outputPref(determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart))),2);
     alert(result);
 
   });
