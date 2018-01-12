@@ -130,17 +130,17 @@ function outputPref(inputArray,request){
   var body ="";
   for(var i=0; i<arrLength; i++){
     if(inputArray[i]==0){
-      title+=drawRuby(1) + " ";
-      body+=drawRuby(2);
+      title+=drawRuby(1)+" ";
+      body+=drawRuby(2)+"\n\n";
     } else if(inputArray[i]==1){
-      title+=drawPHP(1) + " ";
-      body+=drawPHP(2);
+      title+=drawPHP(1)+" ";
+      body+=drawPHP(2)+"\n\n";
     } else if(inputArray[i]==2){
       title+=drawJava(1) + " ";
-      body+=drawJava(2);
+      body+=drawJava(2)+"\n\n";
     } else{
-      title+=drawC(1) + " ";
-      body+=drawC(2);
+      title+=drawC(1)+" ";
+      body+=drawC(2)+"\n\n";
     }
   }
   if(request==1){
@@ -150,7 +150,6 @@ function outputPref(inputArray,request){
   }else{
   }
 };
-
 //draw functions exist to pull either header or body content.
 function drawRuby(content){
   if(content==1){
@@ -210,12 +209,15 @@ function copyArray(inputArray){
   return result;
 }
 // Determines when the next class starts for a particular class.
+function populate(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart){
+  var head = outputPref(determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart))),1);
+  var body = outputPref(determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart))),2);
+  return body;
+}
 function nextClassDateComparator(inputDate, classType){
-
 };
 
 $(document).ready(function(){
-
   $("form#criterion").submit(function(event) {
     event.preventDefault();
     var name = $("#name").val();
@@ -225,9 +227,7 @@ $(document).ready(function(){
     var sizePref = $("input:radio[name=size]:checked").val();
     var optimizationPref = $("input:radio[name=opt]:checked").val();
     var dateToStart = $("#date").val();
-    result=outputPref(determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart))),2);
-    alert(result);
-
+    alert(populate());
   });
 
 });
