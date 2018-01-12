@@ -6,14 +6,31 @@
   color: white;
   text-align: center;
 }
-
+#name {
+  width: 50%;
+}
 #criterion h3 {
   border-radius: 10%;
   background-color:#e6e6e6;
   margin-bottom: 1%;
+  font-size: 24px;
+}
+.form-group {
+  font-size: 24px;
 }
 .radio {
   margin-bottom: 1.5%;
+  font-size: 16px;
+}
+#submitBtn {
+margin-left:40%;
+height: 2.5em;
+width:20%;
+}
+#submitBtn:hover {
+  width: 30%;
+  height:3em;
+  margin-left:34%;
 }
 
 .footer {
