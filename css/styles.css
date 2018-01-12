@@ -1,0 +1,36 @@
+.jumbotron{
+    background-color:#b3b3b3;
+  }
+
+.jumbotron h1 {
+  color: white;
+  text-align: center;
+}
+
+#experience h3 {
+  border-radius: 10%;
+  background-color:#e6e6e6;
+  margin-bottom: 1%;
+}
+#platform h3 {
+  border-radius: 10%;
+  background-color:#e6e6e6;
+  margin-bottom: 1%;
+}
+#application h3 {
+  border-radius: 10%;
+  background-color:#e6e6e6;
+  margin-bottom: 1%;
+}
+#companySize h3 {
+  border-radius: 10%;
+  background-color:#e6e6e6;
+  margin-bottom: 1%;
+}
+.radio {
+  margin-bottom: 1.5%;
+}
+
+.footer {
+  text-align: center;
+}
