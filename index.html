@@ -14,11 +14,111 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <div class="form-group" id="firstForm">
-            <label for="firstFormInput">Do you have experience coding?</label>
-            <input id="firstFormInput" class="form-control" type="text">
+          <div class="form-group">
+            <label for="name">Enter your name: </label>
+            <input id="name" class="form-control" type="text">
           </div>
-        </div>
+          <form id="experience">
+            <h3>What is your prior coding Experience?</h3>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="1">
+                No Experience
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="2">
+                6 Months
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="3">
+                1 Year
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="4">
+                >1 Year
+              </label>
+            </div>
+          </form>
+          <form id="platform">
+            <h3>What platform what you like to code on?</h3>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="1">
+                Web
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="2">
+                Mobile
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="3">
+                Back-End of Enterprises
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="4">
+                Gaming
+              </label>
+            </div>
+          </form>
+          <form id="application">
+            <h3>What type of application do you want to make on that platform?</h3>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="1">
+                Design and user interface.
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="2">
+                Real-time information updating w/interactivity.
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="3">
+                Databases and Back-end Optimizations.
+              </label>
+            </div>
+          </form>
+          <form id="companysize">
+            <h3>What type of company would you like to join after graduating?</h3>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="1">
+                Startup
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="2">
+                Enterprises
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="operator" value="3">
+                Large Companies(Microsoft)
+              </label>
+            </div>
+          </form>
+          <div class="form-group">
+            <label for="date">When do you plan to start?</label>
+            <input id="date" class="form-control" type="date">
+          </div>
+        <button type="submit" id="submitSurvey">Submit Survey</button>
       </div>
     </div>
   </body>
