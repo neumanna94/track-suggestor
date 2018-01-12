@@ -51,9 +51,11 @@ function determineSum(inputCriterionArray){
 
   if(app==1){
     rubySum++;
+    cSum-=2;
+    javaSum--;
     phpSum++;
   } else if(app==2){
-    rubySum++;
+    rubySum+=3;
   }else {
     javaSum+=2;
     cSum+=2;
@@ -93,27 +95,55 @@ function determineClass(inputArrayOfSums){
   var highestPref=inputArrayOfSums[3];
   var secondHighestPref=inputArrayOfSums[2];
   var outputArray = [];
-
+  console.log(inputArray);
   if(inputArray[0]===highestPref){
     outputArray.push(0); //Recommend Ruby
+    if(highestPref==secondHighestPref){
     outputArray.push(determineSecondHighestPref(inputArray,highestPref,secondHighestPref,0));
+    }
   } else if(inputArray[1]===highestPref){
     outputArray.push(1); //Recommend Php
+    if(highestPref==secondHighestPref){
     outputArray.push(determineSecondHighestPref(inputArray,highestPref,secondHighestPref,1));
+    }
   } else if(inputArray[2]===highestPref){
     outputArray.push(2); //Recommend Java
+    if(highestPref==secondHighestPref){
     outputArray.push(determineSecondHighestPref(inputArray,highestPref,secondHighestPref,2));
-  } else {
+    }
+  } else if(inputArray[3]===highestPref) {
     outputArray.push(3); //Recommend C#
+    if(highestPref==secondHighestPref){
+    console.log(determineSecondHighestPref(inputArray,highestPref,secondHighestPref,3));
     outputArray.push(determineSecondHighestPref(inputArray,highestPref,secondHighestPref,3));
+    }
+  } else {
   }
   return outputArray;
 }
+function outputPref(inputArray){
+  var arrLength=inputArray.length;
+  console.log(inputArray);
+  var returnString = ""
+  for(var i=0; i<arrLength; i++){
+    if(inputArray[i]==0){
+      returnString += "Ruby ";
+    } else if(inputArray[i]==1) {
+      returnString += "PHP ";
+    } else if(inputArray[i]==2){
+      returnString += "Java ";
+    } else {
+      returnString += "C# ";
+    }
+  }
+    return returnString;
+};
 // Determines when the next class starts for a particular class.
 function nextClassDateComparator(inputDate, classType){
 
 };
 //Function used to determine if second highest preference is same value as highest.
+//Uses to for loops to not include the highest value while keeping indexing the same.
 function determineSecondHighestPref(inputArray,highestPref,secondHighestPref,locationOfHighest){
   var arrLength=inputArray.length;
   if(highestPref==secondHighestPref){
@@ -128,7 +158,6 @@ function determineSecondHighestPref(inputArray,highestPref,secondHighestPref,loc
       }
     }
   }
-  return;
 }
 //Exists to copy an array instead of referencing it.
 function copyArray(inputArray){
@@ -152,7 +181,7 @@ $(document).ready(function(){
     var sizePref = $("input:radio[name=size]:checked").val();
     var optimizationPref = $("input:radio[name=opt]:checked").val();
     var dateToStart = $("#date").val();
-    result=determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart)));
+    result=outputPref(determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart))));
     alert(result);
 
   });
