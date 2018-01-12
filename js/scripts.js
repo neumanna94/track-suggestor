@@ -212,12 +212,19 @@ function copyArray(inputArray){
 function populate(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart){
   var head = outputPref(determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart))),1);
   var body = outputPref(determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart))),2);
-  return body;
+  location.assign("notAModal.html");
+  $(".col-md-12 h2").text(head);
+  $(".col-md-12 p").text(body);
+
 }
 function nextClassDateComparator(inputDate, classType){
 };
 
 $(document).ready(function(){
+  $("#idx").click(function(){
+    location.assign("index.html");
+
+  });
   $("form#criterion").submit(function(event) {
     event.preventDefault();
     var name = $("#name").val();
@@ -227,7 +234,7 @@ $(document).ready(function(){
     var sizePref = $("input:radio[name=size]:checked").val();
     var optimizationPref = $("input:radio[name=opt]:checked").val();
     var dateToStart = $("#date").val();
-    alert(populate());
+    populate(name,experience,platformPref,sizePref,optimizationPref,dateToStart)
   });
 
 });
