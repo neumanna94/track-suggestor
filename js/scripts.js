@@ -1,5 +1,5 @@
-var allCriterionArrays = [];
-var allPrefArray = [];
+var allCriterionArrays = []; // Will be used later on for statistics
+var allPrefArray = []; // Will be used later on for statistics
 //Creates a criterionArray and then shoves it into allCriterionArrays.
 function criterionsToArray(name, experience, platform, application, size, optimization, startDate){
 
@@ -11,7 +11,7 @@ function criterionsToArray(name, experience, platform, application, size, optimi
   criterionArray.push(size);
   criterionArray.push(optimization);
   criterionArray.push(startDate);
-  allCriterionArrays.push(criterionArray); //Will be used to see all surveys ever submitted.
+  allCriterionArrays.push(criterionArray + "\n"); //Will be used to see all surveys ever submitted.
   return criterionArray;
 };
 //Coefficients used to weight every answer in order to determine users recommended class.
@@ -96,7 +96,7 @@ function determineClass(inputArrayOfSums){
   var highestPref=inputArrayOfSums[3];
   var secondHighestPref=inputArrayOfSums[2];
   var outputArray = [];
-  console.log(inputArray);
+
   if(inputArray[0]===highestPref){
     outputArray.push(0); //Recommend Ruby
     if(highestPref==secondHighestPref){
@@ -115,13 +115,20 @@ function determineClass(inputArrayOfSums){
   } else if(inputArray[3]===highestPref) {
     outputArray.push(3); //Recommend C#
     if(highestPref==secondHighestPref){
-    console.log(determineSecondHighestPref(inputArray,highestPref,secondHighestPref,3));
     outputArray.push(determineSecondHighestPref(inputArray,highestPref,secondHighestPref,3));
     }
   } else {
   }
   allPrefArray.push(outputArray); //Storing this output Array for statistics of all surveys submitted.
   return outputArray;
+}
+//Toggle function for simulating page switch.
+function toggleNow(){
+  $("#criterion").toggle();
+  $(".col-md-12 h4").toggle();
+  $(".col-md-12 p").toggle();
+  $("#idx").toggle();
+  $("#idx2").toggle();
 }
 //Takes outputArray from determineClass to output as a String.
 function outputPref(inputArray,request){
@@ -210,20 +217,21 @@ function copyArray(inputArray){
 }
 // Determines when the next class starts for a particular class.
 function populate(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart){
-  var head = outputPref(determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart))),1);
-  var body = outputPref(determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart))),2);
-  location.assign("notAModal.html");
-  $(".col-md-12 h2").text(head);
-  $(".col-md-12 p").text(body);
-
-}
+  var computeMyRecommendedClassOnce = determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart)));
+  var head = outputPref(computeMyRecommendedClassOnce,1);
+  var body = outputPref(computeMyRecommendedClassOnce,2);
+  var bodyTitle="Language Information: " + "\n";
+  $(".col-md-12 h4").text("Recommended Classes: " + head);
+  $(".col-md-12 p").text(bodyTitle + "\n" + body);
+};
 function nextClassDateComparator(inputDate, classType){
 };
-
 $(document).ready(function(){
   $("#idx").click(function(){
-    location.assign("index.html");
-
+    toggleNow();
+  });
+  $("#idx2").click(function(){
+    alert(allCriterionArrays.toString());
   });
   $("form#criterion").submit(function(event) {
     event.preventDefault();
@@ -234,6 +242,7 @@ $(document).ready(function(){
     var sizePref = $("input:radio[name=size]:checked").val();
     var optimizationPref = $("input:radio[name=opt]:checked").val();
     var dateToStart = $("#date").val();
+    toggleNow();
     populate(name,experience,platformPref,sizePref,optimizationPref,dateToStart)
   });
 
