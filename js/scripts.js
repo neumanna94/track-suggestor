@@ -86,44 +86,24 @@ function determineSum(inputCriterionArray){
   allPrefArray.push(outputMatrix); //Will use for statistics later on.
   return outputMatrix;
 }
-
-function insertSort(inputArrayOfSums){
-  var arrLength = inputArrayOfSums.length;
-  var i, k;
-
-  for(var i=1; i <arrLength; i++){
-    currIVal=inputArrayOfSums[i];
-    k=i-1;
-    while(k>=0&&inputArrayOfSums[k]>currIVal){
-      inputArrayOfSums[k+1]=inputArrayOfSums[k];
-      k=k-1;
-    }
-    inputArrayOfSums[k+1]=currIVal;
-  }
-  return inputArrayOfSums;
-}
-
 function determineClass(inputArrayOfSums){
-  sortedInputArrayOfSums = insertSort(inputArrayOfSums); //Don't know how to make a mappings yet.
-  var highestPref=sortedInputArrayOfSums[3];
-  var secondHighestPref=sortedInputArrayOfSums[2];
-  var secondLeastPref=sortedInputArrayOfSums[1];
-  var leastPref=sortedInputArrayOfSums[0];
-  console.log("I'm in determineClass");
+  inputArrayOfSums.sort(function(a,b){return a-b}); //Don't know how to make a mappings yet.
+  inputArray = inputArrayOfSums.slice(0)
+  var highestPref=inputArrayOfSums[3];
+  var secondHighestPref=inputArrayOfSums[2];
+  var secondLeastPref=inputArrayOfSums[1];
+  var leastPref=inputArrayOfSums[0];
 
-  if(inputArrayOfSums[0]===highestPref){
+  if(inputArray[0]===highestPref){
     return 0;
-  } else if(inputArrayOfSums[1]===highestPref){
+  } else if(inputArray[1]===highestPref){
     return 1;
-  } else if(inputArrayOfSums[2]===highestPref){
+  } else if(inputArray[2]===highestPref){
     return 2;
   } else {
     return 3;
     }
   }
-
-
-
 // Determines when the next class starts for a particular class.
 function nextClassDateComparator(inputDate, classType){
 
@@ -141,7 +121,8 @@ $(document).ready(function(){
     var sizePref = $("input:radio[name=size]:checked").val();
     var optimizationPref = $("input:radio[name=opt]:checked").val();
     var dateToStart = $("#date").val();
-    alert(determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart))));
+    result=determineClass(determineSum(criterionsToArray(name,experience,platformPref,applicationPref,sizePref,optimizationPref,dateToStart)));
+    alert(result);
 
   });
 
