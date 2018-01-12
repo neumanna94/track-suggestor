@@ -42,9 +42,9 @@ function determineSum(inputCriterionArray){
 
   if(platf==1){
     rubySum++;
-    phpSum++;
+    phpSum+=2;
   } else if(platf==2){
-    javaSum++;
+    javaSum+=2;
   } else {
     cSum++;
   }
@@ -55,12 +55,13 @@ function determineSum(inputCriterionArray){
   } else if(app==2){
     rubySum++;
   }else {
-    javaSum++;
-    cSum++;
+    javaSum+=2;
+    cSum+=2;
   }
 
   if(size===1){
     rubySum +=2;
+    cSum --;
   } else {
     phpSum ++;
     javaSum ++;
@@ -87,27 +88,57 @@ function determineSum(inputCriterionArray){
   return outputMatrix;
 }
 function determineClass(inputArrayOfSums){
+  inputArray = copyArray(inputArrayOfSums);
   inputArrayOfSums.sort(function(a,b){return a-b}); //Don't know how to make a mappings yet.
-  inputArray = inputArrayOfSums.slice(0)
   var highestPref=inputArrayOfSums[3];
   var secondHighestPref=inputArrayOfSums[2];
-  var secondLeastPref=inputArrayOfSums[1];
-  var leastPref=inputArrayOfSums[0];
+  var outputArray = [];
 
   if(inputArray[0]===highestPref){
-    return 0;
+    outputArray.push(0); //Recommend Ruby
+    outputArray.push(determineSecondHighestPref(inputArray,highestPref,secondHighestPref,0));
   } else if(inputArray[1]===highestPref){
-    return 1;
+    outputArray.push(1); //Recommend Php
+    outputArray.push(determineSecondHighestPref(inputArray,highestPref,secondHighestPref,1));
   } else if(inputArray[2]===highestPref){
-    return 2;
+    outputArray.push(2); //Recommend Java
+    outputArray.push(determineSecondHighestPref(inputArray,highestPref,secondHighestPref,2));
   } else {
-    return 3;
-    }
+    outputArray.push(3); //Recommend C#
+    outputArray.push(determineSecondHighestPref(inputArray,highestPref,secondHighestPref,3));
   }
+  return outputArray;
+}
 // Determines when the next class starts for a particular class.
 function nextClassDateComparator(inputDate, classType){
 
 };
+//Function used to determine if second highest preference is same value as highest.
+function determineSecondHighestPref(inputArray,highestPref,secondHighestPref,locationOfHighest){
+  var arrLength=inputArray.length;
+  if(highestPref==secondHighestPref){
+    for(var i=0; i<locationOfHighest; i++){
+      if(inputArray[i]==secondHighestPref){
+        return i;
+      }
+    }
+    for(var i=locationOfHighest+1; i<arrLength; i++){
+      if(inputArray[i]==secondHighestPref){
+        return i;
+      }
+    }
+  }
+  return;
+}
+//Exists to copy an array instead of referencing it.
+function copyArray(inputArray){
+  var result = []
+  var length = inputArray.length;
+  for(var i=0;i<length;i++){
+    result.push(inputArray[i]);
+  }
+  return result;
+}
 
 
 $(document).ready(function(){
